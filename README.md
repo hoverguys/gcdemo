@@ -1,7 +1,6 @@
-![rehover](https://hoverguys.github.io/rehover/images/logo.svg)
-<a href="https://rehover-build.ovo.ovh/docs/"><img src="https://codedocs.xyz/doxygen/doxygen.svg"/></a>
+# gcdemo
 
-A homebrew racing game for the Nintendo Gamecube and Wii inspired by Diddy Kong Racing.
+A Garbage Collection demo for Alteration 2020's Calm category.
 
 **Currently under heavy development**
 
@@ -92,7 +91,7 @@ make
 ```
 
 #### Step 2:
-There is no step 2, use the compiled `rehover.dol` with your favorite emulator (if it's not [Dolphin](https://dolphin-emu.org/) we need to talk)
+There is no step 2, use the compiled `gcdemo.dol` with your favorite emulator (if it's not [Dolphin](https://dolphin-emu.org/) we need to talk)
 
 ## License
 

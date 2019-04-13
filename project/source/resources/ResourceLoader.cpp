@@ -48,7 +48,7 @@ void ResourceLoader::LoadPack(const char* path) {
 	unsigned char* address = (unsigned char*)packHeader;
 	std::printf("Loading pack from file %s\n", packfile);
 #else
-	unsigned char* address = (unsigned char*)rehover_data_gcr_txt;
+	unsigned char* address = (unsigned char*)gcdemo_data_gcr_txt;
 	std::printf("Loading pack from memory @ %p\n", address);
 #endif
 
