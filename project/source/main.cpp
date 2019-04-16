@@ -2,13 +2,12 @@
 #include <fat.h>
 #include <ogc/lwp_watchdog.h>
 
-
 #include "rendering/Graphics.h"
 #include "resources/MeshResource.h"
 #include "resources/ResourceLoader.h"
 #include "resources/TextureResource.h"
 
-#include "Game.h"
+#include "Demo.h"
 
 int main() {
 	// DEBUG: Enable USBGecko
@@ -29,23 +28,16 @@ int main() {
 	ResourceLoader::LoadPack("sd:/rehover-data.gcr");
 
 	// Start game
-	Game game;
-	game.init();
+	Demo demo;
+	demo.init();
 
 	while (!SYS_ResetButtonDown()) {
 		// Logic
-		auto updateStart = gettime();
-		game.update(1.f / Graphics::GetFramerate());
-		auto updateEnd = gettime();
+		demo.update(1.f / Graphics::GetFramerate());
 
 		// Render to XFB
 		Graphics::Done();
 		auto graphicsEnd = gettime();
-
-		// Metrics
-		auto updateDelta = ticks_to_nanosecs(diff_ticks(updateStart, updateEnd));
-		auto frameDelta = ticks_to_nanosecs(diff_ticks(updateEnd, graphicsEnd));
-		std::printf(":frametime frame:%llu9 logic:%llu9\n", frameDelta, updateDelta);
 
 		Graphics::Wait();
 	}

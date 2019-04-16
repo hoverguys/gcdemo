@@ -1,11 +1,14 @@
 #pragma once
 #include "pchheader.h"
+#include <ogc/lwp_watchdog.h>
 
 namespace ex = entityx;
 
-class Game : public ex::EntityX {
+class Demo : public ex::EntityX {
+private:
+	u64 startTime = 0;
 public:
-	explicit Game();
+	explicit Demo();
 	void init();
 	void update(ex::TimeDelta dt);
 };

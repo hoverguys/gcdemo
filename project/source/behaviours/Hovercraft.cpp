@@ -4,7 +4,7 @@
 #include "../math/Math.h"
 
 #include "../resources/ResourceLoader.h"
-#include "../scenes/GameScene.h"
+#include "../scenes/DemoScene.h"
 
 namespace cp = Components;
 
@@ -12,15 +12,6 @@ namespace Behaviours {
 void Hovercraft::Tick(ex::Entity entity, ex::TimeDelta dt) {
 	auto transform = entity.component<cp::Transform>();
 	auto rigidbody = entity.component<cp::Rigidbody>();
-
-	// Rotate hovercraft
-	const float deltaRotation = controller->GetAxis(HovercraftController::Motion::Turn) * 3.0f * dt;
-	transform->RotateAxisAngle(Math::worldUp, deltaRotation);
-
-	// Forward
-	const Vector throttle =
-		transform->forward * (controller->GetAxis(HovercraftController::Motion::Throttle) * 25.0f * dt);
-	rigidbody->velocity = rigidbody->velocity + throttle;
 
 	// Have camera track hovercraft
 	auto camera_trans = camera.component<cp::Transform>();
@@ -40,13 +31,6 @@ void Hovercraft::Tick(ex::Entity entity, ex::TimeDelta dt) {
 	/* Lerp between old camera position and target */
 	camera_trans->position = camera_trans->position + (targetCameraPos - camera_trans->position) * t;
 	camera_trans->Lookat(targetPos);
-
-	if (controller->GetAction(HovercraftController::Action::Jump)) {
-		std::printf("Reloading GameScene\n");
-		GameScene::unload();
-		GameScene::load();
-		ResourceLoader::UnloadUnused();
-	}
 }
 
 } // namespace Behaviours

@@ -1,37 +1,37 @@
-#include "Game.h"
+#include "Demo.h"
 
 #include "resources/ResourceLoader.h"
 
 #include "behaviours/Hovercraft.h"
 #include "systems/BehaviourSystem.h"
-#include "systems/InputSystem.h"
 #include "systems/PhysicsSystem.h"
 #include "systems/RenderSystem.h"
 #include "systems/SceneSystem.h"
 #include "systems/UISystem.h"
 
-#include "scenes/GameScene.h"
+#include "scenes/DemoScene.h"
 
 namespace bh = Behaviours;
 
-Game::Game() {
-	systems.add<InputSystem>();
+Demo::Demo() {
 	systems.add<BehaviourSystem<bh::Hovercraft>>();
 	systems.add<PhysicsSystem>();
 	systems.add<RenderSystem>();
 	systems.add<UISystem>();
 	systems.configure();
+	startTime = gettime();
 }
 
-void Game::init() {
+void Demo::init() {
 	SceneSystem::initialize(this);
-	std::printf("Loading Game scene\n");
-	GameScene::load();
+	std::printf("Loading Demo scene\n");
+	DemoScene::load();
 	ResourceLoader::PrintUsage();
 }
 
-void Game::update(ex::TimeDelta dt) {
-	systems.update<InputSystem>(dt);
+void Demo::update(ex::TimeDelta dt) {
+	auto currentTime = gettime() - startTime;
+
 	systems.update<BehaviourSystem<bh::Hovercraft>>(dt);
 	systems.update<PhysicsSystem>(dt);
 	systems.update<RenderSystem>(dt);

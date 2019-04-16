@@ -2,8 +2,8 @@
 #include "../pchheader.h"
 #include "Scene.h"
 
-struct GameSceneMarker {};
-struct GameScene : public Scene<GameSceneMarker> {
+struct DemoSceneMarker {};
+struct DemoScene : public Scene<DemoSceneMarker> {
 public:
     static void load();
 };
