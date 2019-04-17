@@ -8,6 +8,7 @@
 #include <array>
 #include <map>
 #include <memory>
+#include <queue>
 #include <utility>
 
 // entityX

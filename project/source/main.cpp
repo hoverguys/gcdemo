@@ -37,7 +37,6 @@ int main() {
 
 		// Render to XFB
 		Graphics::Done();
-		auto graphicsEnd = gettime();
 
 		Graphics::Wait();
 	}

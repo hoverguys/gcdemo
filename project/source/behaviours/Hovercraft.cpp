@@ -11,7 +11,6 @@ namespace cp = Components;
 namespace Behaviours {
 void Hovercraft::Tick(ex::Entity entity, ex::TimeDelta dt) {
 	auto transform = entity.component<cp::Transform>();
-	auto rigidbody = entity.component<cp::Rigidbody>();
 
 	// Have camera track hovercraft
 	auto camera_trans = camera.component<cp::Transform>();
