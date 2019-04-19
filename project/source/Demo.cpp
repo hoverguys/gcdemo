@@ -11,6 +11,7 @@
 #include "systems/UISystem.h"
 
 #include "scenes/DemoScene.h"
+#include "scenes/FadeScreen.h"
 
 namespace bh = Behaviours;
 
@@ -18,6 +19,7 @@ Demo::Demo() {
 	auto script = std::make_shared<Script>();
 	script->at(0, std::make_shared<LoadSceneEvent<DemoScene>>());
 	script->at(0, std::make_shared<LoadSceneEvent<FadeScreen>>());
+	script->at(sec(2), std::make_shared<FadeIn>());
 	script->at(sec(10), std::make_shared<UnloadSceneEvent<DemoScene>>());
 
 	systems.add<BehaviourSystem<bh::Hovercraft>>();

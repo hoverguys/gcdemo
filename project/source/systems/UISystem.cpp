@@ -2,14 +2,37 @@
 
 #include "../rendering/Graphics.h"
 
+#include "../components/AlphaFade.h"
 #include "../components/Sprite.h"
 #include "../components/Transform.h"
+
+#include <ogc/lwp_watchdog.h>
 
 namespace cp = Components;
 
 void UISystem::update(ex::EntityManager& es, ex::EventManager& events, ex::TimeDelta dt) {
 	// Setup 2D rendering
 	Setup2D();
+
+	// Update fading
+	es.each<cp::AlphaFade, cp::Sprite>([&](ex::Entity entity, cp::AlphaFade& fade, cp::Sprite& sprite) {
+		// This entity isn't fading
+		if (fade.done) {
+			return;
+		}
+
+		auto now = gettime();
+		auto end = fade.startTime + fade.duration;
+		if (now > end) {
+			fade.done = true;
+			sprite.material->uniforms.color0.a = fade.direction == cp::AlphaFade::FadeDirection::FadeOut ? 0xff : 0;
+			return;
+		}
+
+		u8 progress = (u8)((now-fade.startTime)*0xff/(end-fade.startTime));
+		sprite.material->uniforms.color0.a = fade.direction == cp::AlphaFade::FadeDirection::FadeOut ? progress : 0xff - progress;
+		std::printf("Fade progress: %x (%u)\n", progress, progress);
+	});
 
 	es.each<cp::Transform, cp::Sprite>([&](ex::Entity entity, cp::Transform& transform, cp::Sprite& sprite) {
 		const Matrix& spriteMtx = transform.GetMatrix();

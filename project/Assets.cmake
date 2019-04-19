@@ -22,23 +22,24 @@ make_atlas(gamehud GAMEHUD_TEXTURE GAMEHUD_ATLAS ${ASSETS_PREFIX} 256
 
 set(ASSETS
 	MODEL
-		models/hovercraft.obj
+#		models/hovercraft.obj
 #		models/plane.obj
 #		models/terrain.obj
-		models/testmap.obj
+#		models/testmap.obj
 #		models/testplane.obj
 #		models/testdip.obj
 	TEXTURE
-		IA8    CLAMP  BILINEAR textures/hovercraftGlobal.png
-		I8     CLAMP  BILINEAR textures/hovercraftShade.png
+#		IA8    CLAMP  BILINEAR textures/hovercraftGlobal.png
+#		I8     CLAMP  BILINEAR textures/hovercraftShade.png
 #		I4     REPEAT NEAR     textures/checkerboard.png
-		RGB565 REPEAT NEAR  textures/testmap.png
-		RGB5A3 CLAMP  BILINEAR sprites/logo.png
+#		RGB565 REPEAT NEAR  textures/testmap.png
+#		RGB5A3 CLAMP  BILINEAR sprites/logo.png
 		RGB5A3 CLAMP  BILINEAR ABS ${GAMEHUD_TEXTURE}
 		I4     CLAMP  BILINEAR ABS ${TIMERFONT_TEXTURE}
 	SHADER
 		shaders/hovercraft.tev
 		shaders/font.tev
+		shaders/fade.tev
 	BIN
 		ABS ${GAMEHUD_ATLAS}
 		ABS ${TIMERFONT_ATLAS}
