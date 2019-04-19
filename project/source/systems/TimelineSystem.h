@@ -7,10 +7,10 @@ namespace ex = entityx;
 
 class TimelineSystem : public ex::System<TimelineSystem> {
 public:
-	TimelineSystem(Script& script);
+	TimelineSystem(std::shared_ptr<Script> script);
 	void update(ex::EntityManager& es, ex::EventManager& events, ex::TimeDelta dt) override;
 
 protected:
-	Script& tlScript;
+	std::shared_ptr<Script> tlScript;
 	u64 startTime = 0;
 };

@@ -15,9 +15,10 @@
 namespace bh = Behaviours;
 
 Demo::Demo() {
-	Script script;
-	script.at(0, LoadSceneEvent<DemoScene>());
-	script.at(10, UnloadSceneEvent<DemoScene>());
+	auto script = std::make_shared<Script>();
+	script->at(0, std::make_shared<LoadSceneEvent<DemoScene>>());
+	script->at(0, std::make_shared<LoadSceneEvent<FadeScreen>>());
+	script->at(sec(10), std::make_shared<UnloadSceneEvent<DemoScene>>());
 
 	systems.add<BehaviourSystem<bh::Hovercraft>>();
 	systems.add<PhysicsSystem>();
@@ -29,11 +30,13 @@ Demo::Demo() {
 
 void Demo::init() {
 	SceneSystem::initialize(this);
-	std::printf("Loading Demo scene\n");
 	ResourceLoader::PrintUsage();
 }
 
 void Demo::update(ex::TimeDelta dt) {
-	systems.update_all(dt);
 	systems.update<TimelineSystem>(dt);
+	systems.update<BehaviourSystem<bh::Hovercraft>>(dt);
+	systems.update<PhysicsSystem>(dt);
+	systems.update<RenderSystem>(dt);
+	systems.update<UISystem>(dt);
 }

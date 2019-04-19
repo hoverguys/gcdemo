@@ -1,5 +1,9 @@
 #include "Script.h"
 
-void Script::at(u64 time, ScriptEvent event) {
-	events.push(ScriptEventEntry(time, event));
+#include "components/Sprite.h"
+
+namespace cp = Components;
+
+void Script::at(u64 at, std::shared_ptr<ScriptEvent> event) {
+	events.push(ScriptEventEntry(at, event));
 }
