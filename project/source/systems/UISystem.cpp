@@ -24,8 +24,8 @@ void UISystem::update(ex::EntityManager& es, ex::EventManager& events, ex::TimeD
 		auto now = gettime();
 		auto end = fade.startTime + fade.duration;
 		if (now > end) {
-			fade.done = true;
 			sprite.material->uniforms.color0.a = fade.direction == cp::AlphaFade::FadeDirection::FadeOut ? 0xff : 0;
+			fade.done = true;
 			return;
 		}
 

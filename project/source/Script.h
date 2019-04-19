@@ -26,12 +26,12 @@ struct UnloadSceneEvent : ScriptEvent {
 };
 
 struct FadeIn : ScriptEvent {
-	u32 duration = sec(1);
+	u32 duration = sec(2);
 	void run(ex::EntityManager& es, ex::EventManager& events) const override;
 };
 
 struct FadeOut : ScriptEvent {
-	u32 duration = sec(1);
+	u32 duration = sec(2);
 	void run(ex::EntityManager& es, ex::EventManager& events) const override;
 };
 

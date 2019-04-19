@@ -37,7 +37,7 @@ set(ASSETS
 		RGB5A3 CLAMP  BILINEAR ABS ${GAMEHUD_TEXTURE}
 		I4     CLAMP  BILINEAR ABS ${TIMERFONT_TEXTURE}
 	SHADER
-		shaders/hovercraft.tev
+#		shaders/hovercraft.tev
 		shaders/font.tev
 		shaders/fade.tev
 	BIN
