@@ -34,7 +34,24 @@ void UISystem::update(ex::EntityManager& es, ex::EventManager& events, ex::TimeD
 		std::printf("Fade progress: %x (%u)\n", progress, progress);
 	});
 
-	es.each<cp::Transform, cp::Sprite>([&](ex::Entity entity, cp::Transform& transform, cp::Sprite& sprite) {
+	// Sort sprites on depth
+	std::priority_queue<
+		SortedSprite,
+		std::vector<SortedSprite>,
+		std::greater<SortedSprite>
+		> orderedSprites;
+
+	for (ex::Entity entity : es.entities_with_components<cp::Transform, cp::Sprite>()) {
+		ex::ComponentHandle<cp::Transform> transform = entity.component<cp::Transform>();
+		orderedSprites.push(std::make_pair(transform->position.z, entity));
+	}
+
+	// Render sorted sprites
+	while(!orderedSprites.empty()) {
+		auto entity = orderedSprites.top().second;
+		auto transform = *entity.component<cp::Transform>();
+		auto sprite = *entity.component<cp::Sprite>();
+
 		const Matrix& spriteMtx = transform.GetMatrix();
 
 		// Positional matrix with camera
@@ -87,7 +104,9 @@ void UISystem::update(ex::EntityManager& es, ex::EventManager& events, ex::TimeD
 		GX_TexCoord2f32(uv.second.x, uv.first.y);
 
 		GX_End();
-	});
+
+		orderedSprites.pop();
+	};
 }
 
 void UISystem::Setup2D() {

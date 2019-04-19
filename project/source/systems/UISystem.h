@@ -3,6 +3,8 @@
 
 namespace ex = entityx;
 
+typedef std::pair<float, ex::Entity> SortedSprite;
+
 class UISystem : public ex::System<UISystem> {
 public:
 	void update(ex::EntityManager& es, ex::EventManager& events, ex::TimeDelta dt) override;

@@ -14,7 +14,7 @@ void Graphics::Init() {
 	VIDEO_Init();
 
 	/* Get render mode */
-	rmode = VIDEO_GetPreferredMode(NULL); //&TVPal528Int;
+	rmode = VIDEO_GetPreferredMode(&TVNtsc480Prog); //&TVPal528Int;
 
 	/* Try to get the framerate */
 	Graphics::frameTime = 1.f / Graphics::GetFramerate();
@@ -68,7 +68,7 @@ void Graphics::Init() {
 	GX_Init(gpfifo, DEFAULT_FIFO_SIZE);
 
 	/* Clear the background to black and clear the Z buf */
-	GXColor background = {0x93, 0xeb, 0xff, 0xff};
+	GXColor background = {0xff, 0x00, 0xff, 0xff};
 	GX_SetCopyClear(background, GX_MAX_Z24);
 
 	GX_SetDispCopyYScale(GX_GetYScaleFactor(rmode->efbHeight, rmode->xfbHeight));

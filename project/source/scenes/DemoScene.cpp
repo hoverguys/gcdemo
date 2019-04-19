@@ -14,19 +14,14 @@
 namespace cp = Components;
 
 void DemoScene::load() {
-    // Timer sprite
-	auto timer = create();
-	auto timerTexRes = ResourceLoader::Load<TextureResource>("generated/timerfont.png");
-	auto timerTex = timerTexRes->Load();
-	auto fontShaderBin = ResourceLoader::Load<ShaderResource>("shaders/font.tev");
-	auto fontShader = fontShaderBin->Load();
-	auto timerMat = std::make_shared<Material>();
-	timerMat->textures = {timerTex};
-	timerMat->shader = fontShader;
-	timerMat->uniforms.color0 = GXColor{0xff, 0, 0, 0xff};
-	// auto timerAtlasRes = ResourceLoader::Load<AtlasResource>("generated/timer.png.atlas");
-	// auto timerAtlas = timerAtlasRes->Load();
-	timer.assign<cp::Transform>(cp::Transform({10, 10, -2}));
-	timer.assign<cp::Sprite>(cp::Sprite(Vector2D(128, 128), timerMat, Rect(0, 0, 1, 1))); // TODO Make Atlas work (also nicer to use)
+    // Background sprite
+	auto background = create();
+	auto backgroundTex = ResourceLoader::Load<TextureResource>("textures/testmap.png")->Load();
+	auto backgroundMat = std::make_shared<Material>();
+	backgroundMat->textures = {backgroundTex};
+	backgroundMat->uniforms.color0 = GXColor{0xff, 0, 0, 0xff};
+
+	background.assign<cp::Transform>(cp::Transform({0, 0, -2}));
+	background.assign<cp::Sprite>(cp::Sprite(Vector2D(640, 480), backgroundMat, Rect(0, 0, 1, 1)));
     std::printf("Loaded DemoScene\n");
 }

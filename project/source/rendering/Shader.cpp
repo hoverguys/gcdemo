@@ -32,6 +32,10 @@ void Shader::Default() {
 }
 
 void Shader::DefaultUnlit() {
+	GX_SetChanAmbColor(GX_COLOR0A0, GXColor{0x00, 0x00, 0x00, 0xff});
+	GX_SetChanMatColor(GX_COLOR0A0, GXColor{0xff, 0xff, 0xff, 0xff});
+	GX_SetChanMatColor(GX_COLOR1A1, GXColor{0xff, 0xff, 0xff, 0xff});
+
 	// 1 TEV Stage, 1 Texture (current)
 	GX_SetNumIndStages(0);
 	GX_SetNumTevStages(1);
