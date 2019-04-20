@@ -23,11 +23,11 @@ find_path(LIBOGC_INCLUDE_DIR gccore.h
 
 find_path(LIBOGC_LIBRARY_DIR_GCN NAMES libogc.a
           PATHS ${LIBOGC_PATHS}
-          PATH_SUFFIXES lib/cube libogc/lib/cube )
+          PATH_SUFFIXES lib/cube libogc/lib/cube)
 
 find_path(LIBOGC_LIBRARY_DIR_WII NAMES libogc.a
           PATHS ${LIBOGC_PATHS}
-          PATH_SUFFIXES lib/wii libogc/lib/wii )
+          PATH_SUFFIXES lib/wii libogc/lib/wii)
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set LIBOGC_FOUND to TRUE
@@ -88,11 +88,21 @@ endfunction()
 #     add_default_libraries(<target> <lib1> [<lib2> ..])
 function(add_default_libraries target)
     foreach(libname ${ARGN})
-        if(GCN)
-            target_link_libraries(${target}_gcn "${LIBOGC_LIBRARY_DIR_GCN}/lib${libname}.a")
-        endif()
-        if(WII)
-            target_link_libraries(${target}_wii "${LIBOGC_LIBRARY_DIR_WII}/lib${libname}.a")
+        # Check if it's standard standard (like, not even libogc)
+        if(EXISTS "${DEVKITPRO}/devkitPPC/powerpc-eabi/lib/lib${libname}.a")
+            if(GCN)
+                target_link_libraries(${target}_gcn "${DEVKITPRO}/devkitPPC/powerpc-eabi/lib/lib${libname}.a")
+            endif()
+            if(WII)
+                target_link_libraries(${target}_wii "${DEVKITPRO}/devkitPPC/powerpc-eabi/lib/lib${libname}.a")
+            endif()
+        else()
+            if(GCN)
+                target_link_libraries(${target}_gcn "${LIBOGC_LIBRARY_DIR_GCN}/lib${libname}.a")
+            endif()
+            if(WII)
+                target_link_libraries(${target}_wii "${LIBOGC_LIBRARY_DIR_WII}/lib${libname}.a")
+            endif()
         endif()
     endforeach()
 endfunction()

@@ -1,4 +1,5 @@
 #include "pchheader.h"
+#include <asndlib.h>
 #include <fat.h>
 
 #include "rendering/Graphics.h"
@@ -11,6 +12,8 @@
 int main() {
 	// DEBUG: Enable USBGecko
 	CON_EnableGecko(1, 0);
+
+	ASND_Init();
 
 	// Initialize graphics
 	Graphics::Init();
