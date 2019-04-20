@@ -13,13 +13,6 @@ make_atlas(timerfont TIMERFONT_TEXTURE TIMERFONT_ATLAS ${ASSETS_PREFIX} 256
 	sprites/timer/Num9.png
 )
 
-make_atlas(gamehud GAMEHUD_TEXTURE GAMEHUD_ATLAS ${ASSETS_PREFIX} 256
-	sprites/gamehud/LBPosition1.png
-	sprites/gamehud/LBPosition2.png
-	sprites/gamehud/LBPosition3.png
-	sprites/gamehud/LBPosition4.png
-)
-
 set(ASSETS
 	MODEL
 #		models/hovercraft.obj
@@ -32,16 +25,14 @@ set(ASSETS
 #		IA8    CLAMP  BILINEAR textures/hovercraftGlobal.png
 #		I8     CLAMP  BILINEAR textures/hovercraftShade.png
 #		I4     REPEAT NEAR     textures/checkerboard.png
-		RGB565 REPEAT NEAR  textures/testmap.png
-#		RGB5A3 CLAMP  BILINEAR sprites/logo.png
-		RGB5A3 CLAMP  BILINEAR ABS ${GAMEHUD_TEXTURE}
+		RGB565 CLAMP  NEAR     sprites/desire.png
 		I4     CLAMP  BILINEAR ABS ${TIMERFONT_TEXTURE}
 	SHADER
 #		shaders/hovercraft.tev
 		shaders/font.tev
 		shaders/fade.tev
+		shaders/test.tev
 	BIN
 		audio/music.ogg
-		ABS ${GAMEHUD_ATLAS}
 		ABS ${TIMERFONT_ATLAS}
 )

@@ -1,0 +1,11 @@
+GX_SetNumIndStages(0);
+GX_SetNumTevStages(1);
+GX_SetNumTexGens(1);
+GX_SetNumChans(1);
+
+// Use alpha blending
+GX_SetTevOp(GX_TEVSTAGE0, GX_REPLACE );
+GX_SetBlendMode(GX_BM_NONE, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
+
+// Set light off
+GX_SetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_REG, GX_SRC_REG, GX_LIGHT0, GX_DF_CLAMP, GX_AF_NONE);

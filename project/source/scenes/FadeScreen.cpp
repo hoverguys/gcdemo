@@ -13,8 +13,7 @@ namespace cp = Components;
 void FadeScreen::load() {
     // Full-sceen black sprite that *should* cover everything else
 	auto fader = create();
-	auto fadeShaderBin = ResourceLoader::Load<ShaderResource>("shaders/fade.tev");
-	auto fadeShader = fadeShaderBin->Load();
+	auto fadeShader = ResourceLoader::Load<ShaderResource>("shaders/fade.tev")->Load();
 	auto fadeMat = std::make_shared<Material>();
 
 	fadeMat->shader = fadeShader;

@@ -19,10 +19,10 @@ Demo::Demo() {
 	script->at(0, std::make_shared<LoadSceneEvent<BGM>>());
 	script->at(0, std::make_shared<LoadSceneEvent<FadeScreen>>());
 	script->at(0, std::make_shared<LoadSceneEvent<DemoScene>>());
-	script->at(sec(0), std::make_shared<FadeIn>(sec(2)));
-	script->at(sec(8), std::make_shared<FadeOut>(sec(2)));
-	script->at(sec(10), std::make_shared<UnloadSceneEvent<DemoScene>>());
 	script->at(sec(1), std::make_shared<PlayMusic>());
+	script->at(sec(0), std::make_shared<FadeIn>(sec(4)));
+	script->at(sec(110), std::make_shared<FadeOut>(sec(10)));
+	script->at(sec(120), std::make_shared<UnloadSceneEvent<DemoScene>>());
 
 	systems.add<AudioSystem>();
 	systems.add<RenderSystem>();
