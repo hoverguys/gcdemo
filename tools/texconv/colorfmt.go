@@ -297,8 +297,23 @@ func encodeCI8(tex image.Image, out io.WriteSeeker, options FormatOptions) (Pale
 		return PaletteData{}, err
 	}
 
-	// Serialize palette and write it
 	paletteoffset, err := out.Seek(0, io.SeekCurrent)
+	if err != nil {
+		return PaletteData{}, err
+	}
+
+	if paletteoffset%32 > 0 {
+		paddedlen := ((paletteoffset/32)+1)*32 - paletteoffset
+		empty := make([]byte, 32, 32)
+		_, err = out.Write(empty[:paddedlen-paletteoffset])
+		if err != nil {
+			return PaletteData{}, fmt.Errorf("error while copying padding for padding: %s", err.Error())
+		}
+
+		paletteoffset += paddedlen
+	}
+
+	// Serialize palette and write it
 	palettebytes := makePaletteBlock(palette, options)
 	_, err = out.Write(palettebytes)
 	return PaletteData{uint32(paletteoffset), uint16(len(palette))}, err
