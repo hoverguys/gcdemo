@@ -235,7 +235,7 @@ static lwpq_t oggplayer_queue = LWP_TQUEUE_NULL;
 static lwp_t h_oggplayer = LWP_THREAD_NULL;
 static int ogg_thread_running = 0;
 
-static void ogg_add_callback(long int voice) {
+static void ogg_add_callback(s32 voice) {
 	if (!ogg_thread_running) {
 		ASND_StopVoice(0);
 		return;
@@ -259,7 +259,8 @@ static void ogg_add_callback(long int voice) {
 	}
 }
 
-static void* ogg_player_thread(private_data_ogg* priv) {
+static void* ogg_player_thread(void* args) {
+	private_data_ogg* priv = (void*) args;
 	int first_time = 1;
 	long ret;
 
@@ -392,7 +393,7 @@ int PlayOgg(const void* buffer, s32 len, int time_pos, int mode) {
 		return -1;
 	}
 
-	if (LWP_CreateThread(&h_oggplayer, (void*)ogg_player_thread, &private_ogg, oggplayer_stack, STACKSIZE, 80) == -1) {
+	if (LWP_CreateThread(&h_oggplayer, ogg_player_thread, &private_ogg, oggplayer_stack, STACKSIZE, 80) == -1) {
 		ogg_thread_running = 0;
 		ov_clear(&private_ogg.vf);
 		private_ogg.fd = -1;
