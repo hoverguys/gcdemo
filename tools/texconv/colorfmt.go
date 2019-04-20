@@ -84,6 +84,7 @@ var fmtEncoders = map[ColorFmt]colorFmtEncoder{
 	ColorFmtRGB5A3: encodeRGB5A3,
 	ColorFmtRGBA8:  encodeRGBA8,
 	ColorFmtA8:     encodeA8,
+	ColorFmtCI4:    encodeCI4,
 	ColorFmtCI8:    encodeCI8,
 }
 
@@ -103,7 +104,7 @@ func encodeI4(tex image.Image, out io.WriteSeeker, options FormatOptions) (Palet
 				grey1, _, _, _ := rgba8(color.GrayModel.Convert(color1))
 				grey2, _, _, _ := rgba8(color.GrayModel.Convert(color2))
 
-				block[baseIndex] = (grey1 & 0xf0) | (grey2 >> 4)
+				block[baseIndex] = (grey1 << 4) | (grey2 & 0x0f)
 			}
 		}
 		return block
@@ -163,7 +164,7 @@ func encodeIA4(tex image.Image, out io.WriteSeeker, options FormatOptions) (Pale
 				col := tex.At(tilePoint.X+x, tilePoint.Y+y)
 				grey, _, _, alpha := rgba8(color.GrayModel.Convert(col))
 
-				block[baseIndex] = (grey & 0xf0) | (alpha >> 4)
+				block[baseIndex] = (grey << 4) | (alpha & 0x0f)
 			}
 		}
 		return block
@@ -263,6 +264,77 @@ func encodeRGBA8(tex image.Image, out io.WriteSeeker, options FormatOptions) (Pa
 	})
 }
 
+func encodeCI4(tex image.Image, out io.WriteSeeker, options FormatOptions) (PaletteData, error) {
+	// Retrieve palette and color indices
+	pim, ok := tex.(image.PalettedImage)
+	if !ok {
+		return PaletteData{}, fmt.Errorf("input image doesn't seem to be paletted")
+	}
+	palette, ok := tex.ColorModel().(color.Palette)
+	if !ok {
+		return PaletteData{}, fmt.Errorf("input image doesn't seem to be paletted")
+	}
+
+	if len(palette) > 16384 {
+		return PaletteData{}, fmt.Errorf("too many palette entries (max 16384)")
+	}
+
+	maxid := uint16(0)
+
+	err := writeTiles(tex, out, options, 8, 8, func(tex image.Image, tilePoint image.Point, options FormatOptions) []byte {
+		block := make([]byte, 32, 32)
+		// Iterate through each pixel in the block
+		for y := 0; y < 8; y++ {
+			for x := 0; x < 4; x++ {
+				// Calculate base index
+				baseIndex := x + y*4
+
+				// Get colors
+				idx1 := pim.ColorIndexAt(tilePoint.X+x*2, tilePoint.Y+y)
+				idx2 := pim.ColorIndexAt(tilePoint.X+x*2+1, tilePoint.Y+y)
+
+				if uint16(idx1) > maxid {
+					maxid = uint16(idx1)
+				}
+				if uint16(idx2) > maxid {
+					maxid = uint16(idx2)
+				}
+
+				block[baseIndex] = (idx1 << 4) | (idx2 & 0x0f)
+			}
+		}
+		return block
+	})
+	if err != nil {
+		return PaletteData{}, err
+	}
+
+	if maxid > 16 {
+		return PaletteData{}, fmt.Errorf("image needs more than 16 colors (max for CI4), try CI8")
+	}
+
+	paletteoffset, err := out.Seek(0, io.SeekCurrent)
+	if err != nil {
+		return PaletteData{}, err
+	}
+
+	if paletteoffset%32 > 0 {
+		paddedlen := ((paletteoffset/32)+1)*32 - paletteoffset
+		empty := make([]byte, 32, 32)
+		_, err = out.Write(empty[:paddedlen-paletteoffset])
+		if err != nil {
+			return PaletteData{}, fmt.Errorf("error while copying padding for padding: %s", err.Error())
+		}
+
+		paletteoffset += paddedlen
+	}
+
+	// Serialize palette and write it
+	palettebytes := makePaletteBlock(palette, options, maxid+1)
+	_, err = out.Write(palettebytes)
+	return PaletteData{uint32(paletteoffset), maxid + 1}, err
+}
+
 func encodeCI8(tex image.Image, out io.WriteSeeker, options FormatOptions) (PaletteData, error) {
 	// Retrieve palette and color indices
 	pim, ok := tex.(image.PalettedImage)
@@ -278,6 +350,8 @@ func encodeCI8(tex image.Image, out io.WriteSeeker, options FormatOptions) (Pale
 		return PaletteData{}, fmt.Errorf("too many palette entries (max 16384)")
 	}
 
+	maxid := uint16(0)
+
 	// Write indices as data
 	err := writeTiles(tex, out, options, 8, 4, func(tex image.Image, tilePoint image.Point, options FormatOptions) []byte {
 		block := make([]byte, 32, 32)
@@ -289,6 +363,10 @@ func encodeCI8(tex image.Image, out io.WriteSeeker, options FormatOptions) (Pale
 
 				// Set color index
 				block[baseIndex] = pim.ColorIndexAt(tilePoint.X+x, tilePoint.Y+y)
+
+				if uint16(block[baseIndex]) > maxid {
+					maxid = uint16(block[baseIndex])
+				}
 			}
 		}
 		return block
@@ -314,9 +392,9 @@ func encodeCI8(tex image.Image, out io.WriteSeeker, options FormatOptions) (Pale
 	}
 
 	// Serialize palette and write it
-	palettebytes := makePaletteBlock(palette, options)
+	palettebytes := makePaletteBlock(palette, options, maxid+1)
 	_, err = out.Write(palettebytes)
-	return PaletteData{uint32(paletteoffset), uint16(len(palette))}, err
+	return PaletteData{uint32(paletteoffset), maxid + 1}, err
 }
 
 type tileFunc func(tex image.Image, tilePoint image.Point, options FormatOptions) []byte
@@ -345,10 +423,17 @@ func writeTiles(tex image.Image, out io.WriteSeeker, options FormatOptions, tile
 	return nil
 }
 
-func makePaletteBlock(palette color.Palette, options FormatOptions) []byte {
+func makePaletteBlock(palette color.Palette, options FormatOptions, maxPalette uint16) []byte {
+	// Sanity check (probably not needed)
+	if maxPalette > uint16(len(palette)) {
+		maxPalette = uint16(len(palette))
+	}
 	// Create buffer for palette
-	palettedata := make([]byte, 2*len(palette))
+	palettedata := make([]byte, 2*maxPalette)
 	for index, col := range palette {
+		if uint16(index) >= maxPalette {
+			break
+		}
 		// Get color converted to chosen palette color format
 		var colordata uint16
 		switch options.PaletteFmt {
