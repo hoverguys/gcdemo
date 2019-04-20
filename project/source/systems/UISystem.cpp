@@ -15,6 +15,7 @@ void UISystem::update(ex::EntityManager& es, ex::EventManager& events, ex::TimeD
 	Setup2D();
 
 	// Update fading
+	// TODO Move to own system
 	es.each<cp::AlphaFade, cp::Sprite>([&](ex::Entity entity, cp::AlphaFade& fade, cp::Sprite& sprite) {
 		// This entity isn't fading
 		if (fade.done) {
@@ -31,7 +32,6 @@ void UISystem::update(ex::EntityManager& es, ex::EventManager& events, ex::TimeD
 
 		u8 progress = (u8)((now-fade.startTime)*0xff/(end-fade.startTime));
 		sprite.material->uniforms.color0.a = fade.direction == cp::AlphaFade::FadeDirection::FadeOut ? progress : 0xff - progress;
-		std::printf("Fade progress: %x (%u)\n", progress, progress);
 	});
 
 	// Sort sprites on depth

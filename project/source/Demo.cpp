@@ -16,10 +16,10 @@ Demo::Demo() {
 	auto script = std::make_shared<Script>();
 	script->at(0, std::make_shared<LoadSceneEvent<FadeScreen>>());
 	script->at(0, std::make_shared<LoadSceneEvent<DemoScene>>());
-	script->at(sec(5), std::make_shared<FadeIn>(sec(2)));
+	script->at(sec(0), std::make_shared<FadeIn>(sec(2)));
+	script->at(sec(8), std::make_shared<FadeOut>(sec(2)));
 	script->at(sec(10), std::make_shared<UnloadSceneEvent<DemoScene>>());
 
-	//systems.add<PhysicsSystem>();
 	systems.add<RenderSystem>();
 	systems.add<UISystem>();
 	systems.add<TimelineSystem>(script);
@@ -33,7 +33,6 @@ void Demo::init() {
 
 void Demo::update(ex::TimeDelta dt) {
 	systems.update<TimelineSystem>(dt);
-	//systems.update<PhysicsSystem>(dt);
 	systems.update<RenderSystem>(dt);
 	systems.update<UISystem>(dt);
 }

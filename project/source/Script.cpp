@@ -16,10 +16,15 @@ void FadeIn::run(ex::EntityManager& es, ex::EventManager& events) const {
 		fade.startTime = start;
 		fade.duration = duration;
 		fade.done = false;
-		std::printf("One sprite ready to fade\n");
 	});
 }
 
 void FadeOut::run(ex::EntityManager& es, ex::EventManager& events) const {
-	//todo
+	u64 start = gettime();
+	es.each<cp::AlphaFade, cp::Sprite>([&](ex::Entity entity, cp::AlphaFade& fade, cp::Sprite& sprite) {
+		fade.direction = cp::AlphaFade::FadeDirection::FadeOut;
+		fade.startTime = start;
+		fade.duration = duration;
+		fade.done = false;
+	});
 }
