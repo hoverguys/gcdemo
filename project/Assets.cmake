@@ -25,7 +25,7 @@ set(ASSETS
 #		IA8    CLAMP  BILINEAR textures/hovercraftGlobal.png
 #		I8     CLAMP  BILINEAR textures/hovercraftShade.png
 #		I4     REPEAT NEAR     textures/checkerboard.png
-		CI8    CLAMP  NEAR     sprites/desire.png
+		CI4    CLAMP  NEAR     sprites/desire.png
 		I4     CLAMP  BILINEAR ABS ${TIMERFONT_TEXTURE}
 	SHADER
 #		shaders/hovercraft.tev
