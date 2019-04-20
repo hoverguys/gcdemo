@@ -10,7 +10,6 @@ void TextureResource::Initialize() {
 	// Check for palette format
 	if (header->format >= 0x08 && header->format <= 0x0A) {
 		palette = static_cast<unsigned char*>(address) + header->paletteOffset;
-		std::printf("Palette data at 0x%p\n", palette);
 	}
 
 	auto t = std::make_shared<Texture>();

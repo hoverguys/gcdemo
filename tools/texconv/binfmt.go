@@ -98,7 +98,7 @@ func SaveTexture(tex image.Image, out io.WriteSeeker, options TextureOptions) er
 	endianess.PutUint16(header[0:], uint16(width))
 	endianess.PutUint16(header[2:], uint16(height))
 	header[4] = fmtid[options.Format]
-	header[5] = fmtid[options.PaletteFmt]
+	header[5] = palfmtid[options.PaletteFmt]
 	header[6] = mipmap
 	header[7] = filter | wrap<<2 | wrap<<5
 
