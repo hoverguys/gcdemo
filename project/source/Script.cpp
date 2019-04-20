@@ -1,7 +1,9 @@
 #include "Script.h"
 
-#include "components/Sprite.h"
 #include "components/AlphaFade.h"
+#include "components/Sprite.h"
+
+#include "systems/AudioSystem.h"
 
 namespace cp = Components;
 
@@ -27,4 +29,12 @@ void FadeOut::run(ex::EntityManager& es, ex::EventManager& events) const {
 		fade.duration = duration;
 		fade.done = false;
 	});
+}
+
+void PlayMusic::run(ex::EntityManager& es, ex::EventManager& events) const {
+	events.emit<AudioEvent>(AudioEvent{AudioEvent::Type::PlayMusic});
+}
+
+void StopMusic::run(ex::EntityManager& es, ex::EventManager& events) const {
+	events.emit<AudioEvent>(AudioEvent{AudioEvent::Type::StopMusic});
 }

@@ -41,6 +41,7 @@ set(ASSETS
 		shaders/font.tev
 		shaders/fade.tev
 	BIN
+		audio/music.ogg
 		ABS ${GAMEHUD_ATLAS}
 		ABS ${TIMERFONT_ATLAS}
 )

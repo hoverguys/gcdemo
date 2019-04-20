@@ -6,7 +6,7 @@
 #include <ogc/lwp_watchdog.h>
 
 #define sec(x) secs_to_ticks(x)
-#define min(x) sec(60*x)
+#define min(x) sec(60 * x)
 #define ms(x) millisecs_to_ticks(x)
 
 struct ScriptEvent {
@@ -36,6 +36,14 @@ struct FadeOut : ScriptEvent {
 	u32 duration;
 
 	FadeOut(u32 duration = sec(2)) : duration(duration) {}
+	void run(ex::EntityManager& es, ex::EventManager& events) const override;
+};
+
+struct PlayMusic : ScriptEvent {
+	void run(ex::EntityManager& es, ex::EventManager& events) const override;
+};
+
+struct StopMusic : ScriptEvent {
 	void run(ex::EntityManager& es, ex::EventManager& events) const override;
 };
 
