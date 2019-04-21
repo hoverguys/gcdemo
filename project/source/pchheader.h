@@ -24,3 +24,7 @@
 #else
 #include <sdcard/gcsd.h>
 #endif
+
+namespace Components {}
+
+namespace cp = Components;

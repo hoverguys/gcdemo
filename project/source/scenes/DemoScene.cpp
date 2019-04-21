@@ -1,15 +1,12 @@
 #include "DemoScene.h"
 
-#include "../components/Sprite.h"
-#include "../components/Transform.h"
-
 #include "../rendering/Material.h"
 #include "../resources/MeshResource.h"
 #include "../resources/ResourceLoader.h"
 #include "../resources/ShaderResource.h"
 #include "../resources/TextureResource.h"
 
-namespace cp = Components;
+#include "../systems/UISystem.h"
 
 void DemoScene::Load() {
     // Background sprite
@@ -19,7 +16,11 @@ void DemoScene::Load() {
 	backgroundMat->shader = ResourceLoader::Load<ShaderResource>("shaders/test.tev")->Load();
 	backgroundMat->uniforms.color0 = GXColor{0, 0, 0, 0xff};
 
-	auto backgroundTransform = cp::Transform({0, 0, -2});
-	auto backgroundSprite = cp::Sprite(Vector2D(640, 480), backgroundMat, Rect(0, 0, 1, 1));
-    std::printf("Loaded DemoScene\n");
+	backgroundTransform = new cp::Transform({0, 0, -2});
+	backgroundSprite = new cp::Sprite(Vector2D(640, 480), backgroundMat, Rect(0, 0, 1, 1));
+}
+
+void DemoScene::Run(float dt) {
+	UISystem::Setup2DCamera();
+	UISystem::Render(*backgroundSprite, *backgroundTransform);
 }

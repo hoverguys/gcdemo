@@ -1,6 +1,6 @@
 #pragma once
 #include "pchheader.h"
-#include <ogc/lwp_watchdog.h>
+#include "scenes/Scene.h"
 
 class Demo {
 private:
@@ -9,4 +9,6 @@ public:
 	explicit Demo();
 	void init();
 	void update(float dt);
+
+	Scene* currentScene;
 };
