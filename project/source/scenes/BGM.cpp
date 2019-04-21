@@ -7,9 +7,8 @@
 
 namespace cp = Components;
 
-void BGM::load() {
-	auto musicPlayer = create();
+void BGM::Load() {
 	auto oggTrack = ResourceLoader::Load<VorbisResource>("audio/music.ogg")->Load();
-	musicPlayer.assign<cp::OggPlayer>(oggTrack);
+	auto oggPlayer = cp::OggPlayer(oggTrack);
 	std::printf("Loaded BGM\n");
 }

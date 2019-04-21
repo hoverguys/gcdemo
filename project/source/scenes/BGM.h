@@ -2,11 +2,8 @@
 #include "../pchheader.h"
 #include "Scene.h"
 
-MARKER(BGMMarker);
-
 class BGM : public Scene {
 public:
-	SCENE(BGMMarker);
-
-	static void load();
+	void Load() override;
+	void Run(float dt) override;
 };

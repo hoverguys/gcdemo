@@ -1,16 +1,24 @@
 #pragma once
+
 #include "../pchheader.h"
 
+#include "../components/Light.h"
 #include "../components/Camera.h"
+#include "../components/Transform.h"
+#include "../components/Renderable.h"
 #include "../math/Matrix.h"
 
-namespace ex = entityx;
+namespace cp = Components;
 
-class RenderSystem : public ex::System<RenderSystem> {
+class RenderSystem {
 public:
-	void update(ex::EntityManager& es, ex::EventManager& events, ex::TimeDelta dt) override;
+	static void Initialize(const u8 lightCount);
+	static void Destroy();
+	static void Setup3DCamera(cp::Camera& camera);
+	static bool SetupLight(const Matrix& cameraMtx, const cp::DirectionalLight& light, const cp::Transform& transform, u8 lightId);
+	static void Render(const Matrix& cameraMtx, const cp::Renderable& renderable, cp::Transform& transform);
+
 private:
-	void RenderScene(const Matrix& cameraMtx, ex::EntityManager& es, ex::EventManager& events, ex::TimeDelta dt);
-	void SetupLights(const Matrix& cameraMtx, ex::EntityManager& es);
-	static void SetupCamera(Components::Camera& camera);
+	static u8 maxLights;
+	static GXLightObj* lightObjects;
 };

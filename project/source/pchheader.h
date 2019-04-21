@@ -11,9 +11,6 @@
 #include <queue>
 #include <utility>
 
-// entityX
-#include <entityx/entityx.h>
-
 // Libogc
 #include <gccore.h>
 #include <gctypes.h>

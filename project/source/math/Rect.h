@@ -43,7 +43,7 @@ public:
 	 *
 	 *  \return The top-left and bottom-right corners as a pair
 	 */
-	std::pair<Vector2D, Vector2D> Bounds();
+	std::pair<Vector2D, Vector2D> Bounds() const;
 
 	/*! \brief Move the rectangle around using a relative point
 	 */

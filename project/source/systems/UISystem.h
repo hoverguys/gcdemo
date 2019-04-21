@@ -1,15 +1,13 @@
 #pragma once
 #include "../pchheader.h"
 
-namespace ex = entityx;
+#include "../components/Sprite.h"
+#include "../components/Transform.h"
 
-typedef std::pair<float, ex::Entity> SortedSprite;
+namespace cp = Components;
 
-class UISystem : public ex::System<UISystem> {
+class UISystem {
 public:
-	void update(ex::EntityManager& es, ex::EventManager& events, ex::TimeDelta dt) override;
-
-private:
-	/*! Setup rendering for 2D sprites */
-	void Setup2D();
+	static void Setup2DCamera();
+	static void Render(const cp::Sprite& sprite, cp::Transform& transform);
 };

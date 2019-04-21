@@ -19,8 +19,8 @@ add_multi_target(gcdemo "${SOURCE_FILES}")
 add_multi_precompiled_header(gcdemo source/pchheader.h)
 
 # Dependencies
-add_default_libraries(gcdemo fat ogc asnd m)
-add_port_libraries(gcdemo entityx ogg vorbisidec)
+add_default_libraries(gcdemo fat asnd ogc m)
+add_port_libraries(gcdemo ogg vorbisidec)
 
 # Create resource pack
 include(../Assets)
