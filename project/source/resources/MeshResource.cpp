@@ -1,7 +1,5 @@
 #include "MeshResource.h"
 
-#include "../pchheader.h"
-
 void MeshResource::Initialize() {
 	header = static_cast<MeshResourceHeader*>(address);
 	unsigned char* base = static_cast<unsigned char*>(address);
@@ -11,7 +9,7 @@ void MeshResource::Initialize() {
 	const unsigned int texOffset = nrmOffset + (sizeof(Vector) * header->ncount);
 	const unsigned int indOffset = texOffset + (sizeof(float) * 2 * header->vtcount);
 
-	auto m = std::make_shared<Mesh>(Mesh(
+	auto m = eastl::make_shared<Mesh>(Mesh(
 		reinterpret_cast<Vector*>(base + posOffset),
 		reinterpret_cast<Vector*>(base + nrmOffset),
 		reinterpret_cast<float*>(base + texOffset),
@@ -23,7 +21,7 @@ void MeshResource::Initialize() {
 	internal = m;
 }
 
-std::shared_ptr<Mesh> MeshResource::Load() {
+eastl::shared_ptr<Mesh> MeshResource::Load() {
 	// Early out
 	if (loaded) {
 		return internal;

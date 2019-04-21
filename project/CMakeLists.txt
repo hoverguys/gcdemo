@@ -20,7 +20,10 @@ add_multi_precompiled_header(gcdemo source/pchheader.h)
 
 # Dependencies
 add_default_libraries(gcdemo fat asnd ogc m)
-add_port_libraries(gcdemo ogg vorbisidec)
+add_port_libraries(gcdemo ogg vorbisidec EASTL)
+
+# EASTL platform definition
+add_definitions(-DEA_PLATFORM_GEKKO)
 
 # Create resource pack
 include(../Assets)

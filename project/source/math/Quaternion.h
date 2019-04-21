@@ -1,5 +1,7 @@
 #pragma once
-#include "Math.h"
+
+class Matrix;
+class Vector;
 
 /*! \brief Quaternion class
  */

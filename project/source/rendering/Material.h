@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Shader.h"
 #include "Texture.h"
 
@@ -11,12 +12,12 @@ struct ShaderVars {
 /*! Mesh Material */
 struct Material {
 	/*! Textures used by the material/shader */
-	std::array<std::shared_ptr<Texture>, 8> textures;
+	eastl::array<eastl::shared_ptr<Texture>, 8> textures;
 
 	/*! \brief Shader object
 	 *  If null, a default one will be used when rendering
 	 */
-	std::shared_ptr<Shader> shader;
+	eastl::shared_ptr<Shader> shader;
 
 	/*! Shader variables */
 	ShaderVars uniforms;

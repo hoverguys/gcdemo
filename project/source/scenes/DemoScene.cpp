@@ -11,7 +11,7 @@
 void DemoScene::Load() {
     // Background sprite
 	auto backgroundTex = ResourceLoader::Load<TextureResource>("sprites/desire.png")->Load();
-	auto backgroundMat = std::make_shared<Material>();
+	auto backgroundMat = eastl::make_shared<Material>();
 	backgroundMat->textures = {backgroundTex};
 	backgroundMat->shader = ResourceLoader::Load<ShaderResource>("shaders/test.tev")->Load();
 	backgroundMat->uniforms.color0 = GXColor{0, 0, 0, 0xff};

@@ -1,5 +1,11 @@
 #pragma once
+
 #include "Math.h"
+#include <EASTL/array.h>
+#include <gctypes.h>
+
+class Quaternion;
+class Vector;
 
 /*! \brief 4x3 Matrix
  */
@@ -13,7 +19,7 @@ public:
 	/*! \brief Create a matrix from an array of values
 	 *  \param data 12 (4*3) values to fill the matrix with
 	 */
-	explicit Matrix(std::array<float, 3 * 4> data) : internal(data) {}
+	explicit Matrix(eastl::array<float, 3 * 4> data) : internal(data) {}
 
 	/*! \brief Get identity matrix
 	 *  | 1 0 0 0 |
@@ -99,5 +105,5 @@ public:
 private:
 	friend class Vector;
 	friend class Quaternion;
-	std::array<float, 3 * 4> internal;
+	eastl::array<float, 3 * 4> internal;
 };

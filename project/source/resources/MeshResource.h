@@ -31,7 +31,7 @@ public:
 	 *
 	 * \return Pointer to the loaded mesh
 	 */
-	std::shared_ptr<Mesh> Load();
+	eastl::shared_ptr<Mesh> Load();
 
 	long int ReferenceCount() override {
 		return internal == NULL ? 0 : internal.use_count();
@@ -42,5 +42,5 @@ public:
 private:
 	MeshResourceHeader* header = nullptr;
 	bool loaded = false;
-	std::shared_ptr<Mesh> internal;
+	eastl::shared_ptr<Mesh> internal;
 };

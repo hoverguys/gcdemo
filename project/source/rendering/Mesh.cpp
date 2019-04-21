@@ -1,7 +1,5 @@
 #include "Mesh.h"
 
-#include "../pchheader.h"
-
 Mesh::~Mesh() {
 	if (displayList != nullptr) {
 		free(displayList);

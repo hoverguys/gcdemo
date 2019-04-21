@@ -26,13 +26,13 @@ set(ASSETS
 #		I8     CLAMP  BILINEAR textures/hovercraftShade.png
 #		I4     REPEAT NEAR     textures/checkerboard.png
 		CI4    CLAMP  NEAR     sprites/desire.png
-		I4     CLAMP  BILINEAR ABS ${TIMERFONT_TEXTURE}
+#		I4     CLAMP  BILINEAR ABS ${TIMERFONT_TEXTURE}
 	SHADER
 #		shaders/hovercraft.tev
-		shaders/font.tev
-		shaders/fade.tev
+#		shaders/font.tev
+#		shaders/fade.tev
 		shaders/test.tev
 	BIN
-		audio/music.ogg
-		ABS ${TIMERFONT_ATLAS}
+#		audio/music.ogg
+#		ABS ${TIMERFONT_ATLAS}
 )

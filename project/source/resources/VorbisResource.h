@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
-
 #include "../audio/VorbisTrack.h"
 #include "Resource.h"
 
@@ -23,12 +21,12 @@ public:
 	 *
 	 * \return Pointer to the loaded Vorbis track
 	 */
-	std::shared_ptr<VorbisTrack> Load();
+	eastl::shared_ptr<VorbisTrack> Load();
 
 	long int ReferenceCount() override { return internal == NULL ? 0 : internal.use_count(); }
 
 	void Initialize() override;
 
 private:
-	std::shared_ptr<VorbisTrack> internal;
+	eastl::shared_ptr<VorbisTrack> internal;
 };

@@ -1,6 +1,7 @@
 #include "Matrix.h"
-#include "Vector.h"
+
 #include "Quaternion.h"
+#include "Vector.h"
 
 Matrix Matrix::Identity() {
     const Matrix identity = Matrix({
@@ -122,7 +123,7 @@ void Matrix::Inverse() {
     tmp.internal[7]  = -tmp.internal[4] * internal[3] - tmp.internal[5] * internal[7] - tmp.internal[6] * internal[11];
     tmp.internal[11] = -tmp.internal[8] * internal[3] - tmp.internal[9] * internal[7] - tmp.internal[10] * internal[11];
 
-    internal = std::move(tmp.internal);
+    internal = eastl::move(tmp.internal);
 }
 
 Matrix Matrix::Inversed() const {
@@ -147,7 +148,7 @@ void Matrix::Transpose() {
         0.0f
     });
 
-    internal = std::move(tmp.internal);
+    internal = eastl::move(tmp.internal);
 }
 
 Vector Matrix::Multiply(const Vector& vec) const {

@@ -5,18 +5,16 @@
 #include <malloc.h>
 
 // STL
-#include <array>
-#include <map>
-#include <memory>
-#include <queue>
-#include <utility>
+#include <EASTL/map.h>
+#include <EASTL/shared_ptr.h>
+#include <EASTL/array.h>
+#include <EASTL/utility.h>
 
 // Libogc
 #include <gccore.h>
 #include <gctypes.h>
 #include <ogc/gu.h>
 #include <ogc/gx.h>
-#include <ogc/pad.h>
 
 // Resource loading
 #ifdef WII

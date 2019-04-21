@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
-
 class Texture {
 public:
 	/*! \brief Bind the texture to a texture mapping slot

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
 #include "Vector2D.h"
 
 /*! \brief 2D Rectangle */
@@ -43,7 +42,7 @@ public:
 	 *
 	 *  \return The top-left and bottom-right corners as a pair
 	 */
-	std::pair<Vector2D, Vector2D> Bounds() const;
+	eastl::pair<Vector2D, Vector2D> Bounds() const;
 
 	/*! \brief Move the rectangle around using a relative point
 	 */

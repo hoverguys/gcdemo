@@ -1,6 +1,8 @@
 #pragma once
-#include "../pchheader.h"
+
 #include "Resource.h"
+#include <EASTL/shared_ptr.h>
+#include <EASTL/map.h>
 
 typedef unsigned int FileHash;
 
@@ -8,10 +10,10 @@ class ResourceLoader {
 public:
 	static void LoadPack(const char* path);
 
-	template <typename T> static std::shared_ptr<T> Load(FileHash hash) {
+	template <typename T> static eastl::shared_ptr<T> Load(FileHash hash) {
 		auto entry = cache.find(hash);
 		if (entry != cache.end()) {
-			return std::static_pointer_cast<T>(entry->second);
+			return eastl::static_pointer_cast<T>(entry->second);
 		}
 
 		auto file = files.find(hash);
@@ -44,7 +46,7 @@ public:
 		std::printf("Loading file %08x from memory at address: %p\n", hash, address);
 #endif
 
-		auto resource = std::make_shared<T>((void*)address, (unsigned int)info.second);
+		auto resource = eastl::make_shared<T>((void*)address, (unsigned int)info.second);
 		resource->Initialize();
 
 		// Cache loaded resource
@@ -53,8 +55,8 @@ public:
 		return resource;
 	}
 
-	template <typename T> static constexpr std::shared_ptr<T> Load(const char* path) {
-		static_assert(std::is_base_of<Resource, T>::value, "Must inherit of type Resource");
+	template <typename T> static constexpr eastl::shared_ptr<T> Load(const char* path) {
+		static_assert(eastl::is_base_of<Resource, T>::value, "Must inherit of type Resource");
 		return Load<T>(fnv1_hash(path));
 	}
 
@@ -99,10 +101,10 @@ private:
 		return result;
 	}
 
-	typedef std::map<FileHash, std::pair<unsigned int, unsigned int>> FileMap;
+	typedef eastl::map<FileHash, eastl::pair<unsigned int, unsigned int>> FileMap;
 	static FileMap files;
 
-	typedef std::map<FileHash, std::shared_ptr<Resource>> ResourceMap;
+	typedef eastl::map<FileHash, eastl::shared_ptr<Resource>> ResourceMap;
 	static ResourceMap cache;
 
 	static unsigned int memoryAllocated;

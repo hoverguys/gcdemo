@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
-
 #include "../rendering/Texture.h"
 #include "Resource.h"
 
@@ -41,7 +39,7 @@ public:
 	 *
 	 * \return Pointer to the loaded texture
 	 */
-	std::shared_ptr<Texture> Load();
+	eastl::shared_ptr<Texture> Load();
 
 	long int ReferenceCount() override { return internal == NULL ? 0 : internal.use_count(); }
 
@@ -50,5 +48,5 @@ public:
 private:
 	TextureResourceHeader* header = nullptr;
 	bool loaded = false;
-	std::shared_ptr<Texture> internal;
+	eastl::shared_ptr<Texture> internal;
 };

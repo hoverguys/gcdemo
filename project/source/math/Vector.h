@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Math.h"
 
 /*! \brief Vector with 3 elements for 3D positioning and math */

@@ -1,5 +1,5 @@
 #pragma once
-#include "../pchheader.h"
+
 #include "Scene.h"
 
 class BGM : public Scene {

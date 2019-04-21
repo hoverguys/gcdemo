@@ -1,12 +1,8 @@
 #include "Demo.h"
 
-#include "resources/ResourceLoader.h"
-
+#include "scenes/Scene.h"
 #include "systems/RenderSystem.h"
-#include "systems/SceneSystem.h"
-#include "systems/UISystem.h"
-
-#include "scenes/BGM.h"
+#include "resources/ResourceLoader.h"
 #include "scenes/DemoScene.h"
 
 Demo::Demo() {

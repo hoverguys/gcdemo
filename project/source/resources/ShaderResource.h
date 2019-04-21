@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
-
 #include "../rendering/Shader.h"
 #include "Resource.h"
 
@@ -23,7 +21,7 @@ public:
 	 *
 	 * \return Pointer to the loaded shader
 	 */
-	std::shared_ptr<Shader> Load();
+	eastl::shared_ptr<Shader> Load();
 
 	long int ReferenceCount() override {
 		return internal == NULL ? 0 : internal.use_count();
@@ -32,5 +30,5 @@ public:
 	void Initialize() override;
 
 private:
-	std::shared_ptr<Shader> internal;
+	eastl::shared_ptr<Shader> internal;
 };

@@ -1,5 +1,4 @@
 #pragma once
-#include "../pchheader.h"
 
 #include "Scene.h"
 #include "../components/Sprite.h"

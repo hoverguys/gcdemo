@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
-
 #include "../math/Rect.h"
 #include "../rendering/Material.h"
 
@@ -12,12 +10,12 @@ struct Sprite {
 	Vector2D size;
 
 	/*! Sprite material (texture + optional shader) */
-	std::shared_ptr<Material> material;
+	eastl::shared_ptr<Material> material;
 
 	/*! Texture offset (for atlasing) */
 	Rect bounds;
 
-	explicit Sprite(const Vector2D& size, const std::shared_ptr<Material>& material,
+	explicit Sprite(const Vector2D& size, const eastl::shared_ptr<Material>& material,
 					const Rect& bounds = Rect(0, 0, 1, 1))
 		: size(size), material(material), bounds(bounds){};
 };

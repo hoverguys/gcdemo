@@ -1,7 +1,7 @@
 #include "Rect.h"
 
-std::pair<Vector2D, Vector2D> Rect::Bounds() const {
-	return std::pair<Vector2D, Vector2D>(start, start + size);
+eastl::pair<Vector2D, Vector2D> Rect::Bounds() const {
+	return eastl::pair<Vector2D, Vector2D>(start, start + size);
 }
 
 void Rect::Move(const Vector2D& delta) {

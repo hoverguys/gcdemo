@@ -1,6 +1,6 @@
 #pragma once
-#include "pchheader.h"
-#include "scenes/Scene.h"
+
+class Scene;
 
 class Demo {
 private:

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
-
 namespace Components {
 /* \brief Denotes a sprite which material is affected by alpha */
 struct AlphaFade {

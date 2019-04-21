@@ -1,5 +1,4 @@
 #pragma once
-#include "../pchheader.h"
 
 class Graphics {
 public:

@@ -1,7 +1,5 @@
 #include "Shader.h"
 
-#include "../pchheader.h"
-
 void Shader::Use() {
 	GX_CallDispList(data, size);
 }

@@ -5,14 +5,16 @@ void TextureResource::Initialize() {
 	unsigned char* data = static_cast<unsigned char*>(address) + header->dataOffset;
 	unsigned char* palette = nullptr;
 
+	// TODO Replace with non std version
 	std::printf("Loading texture (%dx%d fmt %d wrap S%x T%x filter %x) at offset %p\n", header->width, header->height,
 				header->format, header->wrapS, header->wrapT, header->filter, data);
+
 	// Check for palette format
 	if (header->format >= 0x08 && header->format <= 0x0A) {
 		palette = static_cast<unsigned char*>(address) + header->paletteOffset;
 	}
 
-	auto t = std::make_shared<Texture>();
+	auto t = eastl::make_shared<Texture>();
 
 	t->width = header->width;
 	t->height = header->height;
@@ -31,7 +33,7 @@ void TextureResource::Initialize() {
 	internal = t;
 }
 
-std::shared_ptr<Texture> TextureResource::Load() {
+eastl::shared_ptr<Texture> TextureResource::Load() {
 	if (loaded) {
 		return internal;
 	}

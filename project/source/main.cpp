@@ -1,13 +1,24 @@
-#include "pchheader.h"
 #include <asndlib.h>
 #include <fat.h>
 
 #include "rendering/Graphics.h"
-#include "resources/MeshResource.h"
 #include "resources/ResourceLoader.h"
-#include "resources/TextureResource.h"
 
 #include "Demo.h"
+#include <malloc.h>
+
+void* operator new[](size_t size, const char* /*name*/, int /*flags*/, 
+					 unsigned /*debugFlags*/, const char* /*file*/, int /*line*/)
+{
+	return malloc(size);
+}
+
+void* operator new[](size_t size, size_t alignment, size_t alignmentOffset, const char* /*name*/, 
+					 int flags, unsigned /*debugFlags*/, const char* /*file*/, int /*line*/)
+{
+	// Substitute your aligned malloc. 
+	return memalign(size, alignment);
+}
 
 int main() {
 	// DEBUG: Enable USBGecko

@@ -60,7 +60,7 @@ void ResourceLoader::LoadPack(const char* path) {
 	for (unsigned int i = 0; i < header->fileCount; ++i, address += sizeof(PackEntry)) {
 		PackEntry* entry = reinterpret_cast<PackEntry*>(address);
 
-		auto info = std::pair<unsigned int, unsigned int>(entry->offset, entry->size);
+		auto info = eastl::pair<unsigned int, unsigned int>(entry->offset, entry->size);
 		files.emplace(entry->hash, info);
 		std::printf("Found file %08x at %u, size %u bytes\n", entry->hash, info.first, info.second);
 	}

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../pchheader.h"
-
 #include "../components/Light.h"
 #include "../components/Camera.h"
 #include "../components/Transform.h"

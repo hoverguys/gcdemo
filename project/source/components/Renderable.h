@@ -12,19 +12,19 @@ struct Renderable {
 	/*! \brief Create a renderable using just a mesh
 	 *  \param mesh Mesh to render the entity with
 	 */
-	explicit Renderable(const std::shared_ptr<Mesh>& mesh) : Renderable(mesh, nullptr) {}
+	explicit Renderable(const eastl::shared_ptr<Mesh>& mesh) : Renderable(mesh, nullptr) {}
 
 	/*! \brief Create a renderable using a mesh and material
 	 *  \param mesh Mesh to render the entity with
 	 *  \param material Material (texture+shader) to use to render the mesh
 	 */
-	explicit Renderable(const std::shared_ptr<Mesh>& mesh, const std::shared_ptr<Material>& material)
+	explicit Renderable(const eastl::shared_ptr<Mesh>& mesh, const eastl::shared_ptr<Material>& material)
 		: mesh(mesh), material(material) {}
 
 	/*! Mesh */
-	std::shared_ptr<Mesh> mesh;
+	eastl::shared_ptr<Mesh> mesh;
 
 	/*! Material */
-	std::shared_ptr<Material> material;
+	eastl::shared_ptr<Material> material;
 };
 } // namespace Components
