@@ -6,13 +6,6 @@
  */
 class Resource {
 public:
-    /*!
-     * \brief Loads a resource from a memory pointer and size
-     *
-     * \param address Pointer to resource data
-     * \param size Size of resource data
-     */
-    Resource(eastl::span<char> span) : data(span){};
     ~Resource() {
         free(data.data());
     }
@@ -22,6 +15,14 @@ public:
 
 protected:
     friend class ResourceLoader;
+
+    /*!
+     * \brief Loads a resource from a memory pointer and size
+     *
+     * \param address Pointer to resource data
+     * \param size Size of resource data
+     */
+    Resource(eastl::span<char> span) : data(span) {}
 
     eastl::span<char> data;
 };

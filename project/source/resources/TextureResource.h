@@ -43,7 +43,7 @@ public:
     eastl::shared_ptr<Texture> Load();
 
     long int ReferenceCount() override {
-        return internal == NULL ? 0 : internal.use_count();
+        return internal == nullptr ? 0 : internal.use_count();
     }
 
     void Initialize() override;

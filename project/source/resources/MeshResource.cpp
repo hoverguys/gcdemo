@@ -70,7 +70,7 @@ eastl::shared_ptr<Mesh> MeshResource::Load() {
     internal->displayListSize = GX_EndDispList();
     if (internal->displayListSize == 0) {
         std::printf("Error: Display list is wrong size [%u]\n", dispSize);
-        return NULL;
+        return nullptr;
     }
 
     loaded = true;
