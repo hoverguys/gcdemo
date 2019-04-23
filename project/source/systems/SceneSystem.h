@@ -3,5 +3,5 @@
 class SceneSystem {
 public:
 protected:
-	friend class Scene;
+    friend class Scene;
 };

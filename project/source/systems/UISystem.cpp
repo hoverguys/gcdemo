@@ -1,80 +1,79 @@
+#include "pchheader.h"
 #include "UISystem.h"
 
-#include "../rendering/Graphics.h"
-
-#include "../components/Sprite.h"
-#include "../components/Transform.h"
-
-#include "../rendering/Shader.h"
+#include "components/Sprite.h"
+#include "components/Transform.h"
+#include "rendering/Graphics.h"
+#include "rendering/Shader.h"
 
 void UISystem::Setup2DCamera() {
-	// Use orthogonal
-	Graphics::Set2DMode();
+    // Use orthogonal
+    Graphics::Set2DMode();
 
-	// Use identity matrix for normals
-	Mtx dummy;
-	guMtxIdentity(dummy);
-	GX_LoadNrmMtxImm(dummy, GX_PNMTX0);
+    // Use identity matrix for normals
+    Mtx dummy;
+    guMtxIdentity(dummy);
+    GX_LoadNrmMtxImm(dummy, GX_PNMTX0);
 
-	// Setup vertex descriptors to use immediate mode
-	GX_ClearVtxDesc();
-	GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
-	GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
-	GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
-	GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
+    // Setup vertex descriptors to use immediate mode
+    GX_ClearVtxDesc();
+    GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
+    GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
+    GX_SetVtxAttrFmt(GX_VTXFMT0, GX_VA_TEX0, GX_TEX_ST, GX_F32, 0);
 }
 
 void UISystem::Render(const cp::Sprite& sprite, cp::Transform& transform) {
-		const Matrix& spriteMtx = transform.GetMatrix();
+    const Matrix& spriteMtx = transform.GetMatrix();
 
-		// Positional matrix with camera
-		Mtx nativeTemp;
-		spriteMtx.ToNative(nativeTemp);
-		GX_LoadPosMtxImm(nativeTemp, GX_PNMTX0);
+    // Positional matrix with camera
+    Mtx nativeTemp;
+    spriteMtx.ToNative(nativeTemp);
+    GX_LoadPosMtxImm(nativeTemp, GX_PNMTX0);
 
-		auto material = sprite.material;
-		if (material != nullptr) {
-			auto shader = material->shader;
-			if (shader != nullptr) {
-				// Setup shader
-				shader->Use();
+    auto material = sprite.material;
+    if (material != nullptr) {
+        auto shader = material->shader;
+        if (shader != nullptr) {
+            // Setup shader
+            shader->Use();
 
-				// Setup shader uniforms
-				auto settings = material->uniforms;
-				GX_SetChanAmbColor(GX_COLOR0A0, GXColor{0x00, 0x00, 0x00, 0x00});
-				GX_SetChanMatColor(GX_COLOR0A0, settings.color0);
-				GX_SetChanMatColor(GX_COLOR1A1, settings.color1);
-			} else {
-				Shader::DefaultUnlit();
-			}
+            // Setup shader uniforms
+            auto settings = material->uniforms;
+            GX_SetChanAmbColor(GX_COLOR0A0, GXColor{0x00, 0x00, 0x00, 0x00});
+            GX_SetChanMatColor(GX_COLOR0A0, settings.color0);
+            GX_SetChanMatColor(GX_COLOR1A1, settings.color1);
+        } else {
+            Shader::DefaultUnlit();
+        }
 
-			auto textures = material->textures;
-			for (unsigned int i = 0; i < textures.size(); i++) {
-				if (textures[i]) {
-					textures[i]->Bind(i);
-				}
-			}
-		}
+        auto textures = material->textures;
+        for (unsigned int i = 0; i < textures.size(); i++) {
+            if (textures[i]) {
+                textures[i]->Bind(i);
+            }
+        }
+    }
 
-		auto uv = sprite.bounds.Bounds();
+    auto uv = sprite.bounds.Bounds();
 
-		GX_Begin(GX_QUADS, GX_VTXFMT0, 4);
+    GX_Begin(GX_QUADS, GX_VTXFMT0, 4);
 
-		/* Top left */
-		GX_Position2f32(0, 0);
-		GX_TexCoord2f32(uv.first.x, uv.first.y);
+    /* Top left */
+    GX_Position2f32(0, 0);
+    GX_TexCoord2f32(uv.first.x, uv.first.y);
 
-		/* Bottom left */
-		GX_Position2f32(0, sprite.size.y);
-		GX_TexCoord2f32(uv.first.x, uv.second.y);
+    /* Bottom left */
+    GX_Position2f32(0, sprite.size.y);
+    GX_TexCoord2f32(uv.first.x, uv.second.y);
 
-		/* Bottom right */
-		GX_Position2f32(sprite.size.x, sprite.size.y);
-		GX_TexCoord2f32(uv.second.x, uv.second.y);
+    /* Bottom right */
+    GX_Position2f32(sprite.size.x, sprite.size.y);
+    GX_TexCoord2f32(uv.second.x, uv.second.y);
 
-		/* Top right */
-		GX_Position2f32(sprite.size.x, 0);
-		GX_TexCoord2f32(uv.second.x, uv.first.y);
+    /* Top right */
+    GX_Position2f32(sprite.size.x, 0);
+    GX_TexCoord2f32(uv.second.x, uv.first.y);
 
-		GX_End();
+    GX_End();
 }

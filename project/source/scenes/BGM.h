@@ -4,6 +4,6 @@
 
 class BGM : public Scene {
 public:
-	void Load() override;
-	void Run(float dt) override;
+    void Load() override;
+    void Run(float dt) override;
 };

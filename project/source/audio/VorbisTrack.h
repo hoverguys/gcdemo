@@ -1,10 +1,16 @@
 #pragma once
 
-class VorbisTrack {
-protected:
-	friend class VorbisResource;
+namespace Components {
+struct OggPlayer;
+}
 
+class VorbisTrack {
 public:
-	unsigned char* data;
-	unsigned int size;
+    VorbisTrack(eastl::span<char> span) : data(span) {}
+
+protected:
+    friend class VorbisResource;
+    friend class Components::OggPlayer;
+
+    eastl::span<char> data;
 };

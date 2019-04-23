@@ -17,6 +17,7 @@ set(GENERATE_SD_IMAGE false CACHE BOOL "Generate SD image for Dolphin")
 file(GLOB_RECURSE SOURCE_FILES source/*)
 add_multi_target(gcdemo "${SOURCE_FILES}")
 add_multi_precompiled_header(gcdemo source/pchheader.h)
+include_directories(source)
 
 # Dependencies
 add_default_libraries(gcdemo fat asnd ogc m)

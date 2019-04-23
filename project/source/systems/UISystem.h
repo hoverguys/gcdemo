@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../components/Sprite.h"
-#include "../components/Transform.h"
-
-namespace cp = Components;
+namespace Components {
+class Sprite;
+class Transform;
+} // namespace Components
 
 class UISystem {
 public:
-	static void Setup2DCamera();
-	static void Render(const cp::Sprite& sprite, cp::Transform& transform);
+    static void Setup2DCamera();
+    static void Render(const cp::Sprite& sprite, cp::Transform& transform);
 };

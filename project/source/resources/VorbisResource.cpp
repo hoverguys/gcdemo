@@ -1,14 +1,13 @@
+#include "pchheader.h"
 #include "VorbisResource.h"
 
-void VorbisResource::Initialize() {
-	unsigned char* data = static_cast<unsigned char*>(address);
-	auto s = eastl::make_shared<VorbisTrack>();
-	s->data = data;
-	s->size = size;
+#include "audio/VorbisTrack.h"
 
-	internal = s;
+void VorbisResource::Initialize() {
+    auto s = eastl::make_shared<VorbisTrack>(data);
+    internal = s;
 }
 
 eastl::shared_ptr<VorbisTrack> VorbisResource::Load() {
-	return internal;
+    return internal;
 }

@@ -1,9 +1,7 @@
 #pragma once
 
-#include "../systems/SceneSystem.h"
-
 class Scene {
 public:
-	virtual void Load() = 0;
-	virtual void Run(float dt) = 0;
+    virtual void Load() = 0;
+    virtual void Run(float dt) = 0;
 };

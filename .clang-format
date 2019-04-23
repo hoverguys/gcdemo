@@ -8,10 +8,12 @@ AlignAfterOpenBracket: Align
 AlignEscapedNewlines: Left
 AlignTrailingComments: true
 AllowShortCaseLabelsOnASingleLine: true
-AlwaysBreakTemplateDeclarations: true
-AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakTemplateDeclarations: Yes
+AllowShortFunctionsOnASingleLine: Empty
 BreakBeforeBraces: Attach
-UseTab: ForContinuationAndIndentation
+UseTab: Never
 IndentCaseLabels: false
 ColumnLimit: 120
 Standard: Cpp11
+IncludeBlocks: Preserve
+SortIncludes: false

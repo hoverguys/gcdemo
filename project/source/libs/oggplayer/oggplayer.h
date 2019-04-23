@@ -1,7 +1,7 @@
 /*
  Copyright (c) 2008 Francisco Mu�oz 'Hermes' <www.elotrolado.net>
  All rights reserved.
- 
+
  Proper (standard) vorbis usage by Tantric, 2009
  Threading modifications/corrections by Tantric, 2009
 

@@ -1,4 +1,5 @@
 #include "Vector.h"
+#include "pchheader.h"
 
 void Vector::Normalize() {
     float rlength = 1.0f / Magnitude();
@@ -14,11 +15,7 @@ Vector Vector::Normalized() const {
 }
 
 Vector Vector::Cross(const Vector& other) const {
-    return Vector(
-        (y * other.z) - (z * other.y),
-        (z * other.x) - (x * other.z),
-        (x * other.y) - (y * other.x)
-    );
+    return Vector((y * other.z) - (z * other.y), (z * other.x) - (x * other.z), (x * other.y) - (y * other.x));
 }
 
 float Vector::Dot(const Vector& other) const {
@@ -33,22 +30,22 @@ float Vector::SqrMagnitude() const {
     return x * x + y * y + z * z;
 }
 
-Vector Vector::operator* (const float& scale) const {
+Vector Vector::operator*(const float& scale) const {
     return Vector(x * scale, y * scale, z * scale);
 }
 
-Vector Vector::operator* (const Vector& scale) const {
+Vector Vector::operator*(const Vector& scale) const {
     return Vector(x * scale.x, y * scale.y, z * scale.z);
 }
 
-Vector Vector::operator+ (const Vector& other) const {
+Vector Vector::operator+(const Vector& other) const {
     return Vector(x + other.x, y + other.y, z + other.z);
 }
 
-Vector Vector::operator- (const Vector& other) const {
+Vector Vector::operator-(const Vector& other) const {
     return Vector(x - other.x, y - other.y, z - other.z);
 }
 
 Vector::operator guVector() const {
-    return guVector{x,y,z};
+    return guVector{x, y, z};
 }

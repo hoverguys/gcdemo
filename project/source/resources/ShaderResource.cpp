@@ -1,12 +1,13 @@
+#include "pchheader.h"
 #include "ShaderResource.h"
 
-void ShaderResource::Initialize() {
-	unsigned char* data = static_cast<unsigned char*>(address);
-	auto s = eastl::make_shared<Shader>();
-	s->data = data;
-	s->size = size;
+#include "rendering/Shader.h"
 
-	internal = s;
+void ShaderResource::Initialize() {
+    auto s = eastl::make_shared<Shader>(data);
+    internal = s;
 }
 
-eastl::shared_ptr<Shader> ShaderResource::Load() { return internal; }
+eastl::shared_ptr<Shader> ShaderResource::Load() {
+    return internal;
+}
